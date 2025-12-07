@@ -169,6 +169,7 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
         "https://github.com/cubiq/ComfyUI_essentials"
         "https://github.com/Fannovel16/comfyui_controlnet_aux"
+        "https://github.com/ltdrdata/was-node-suite-comfyui"
     )
 
     for repo in "${CUSTOM_NODES[@]}"; do
@@ -315,6 +316,10 @@ fi
 # Installing custom requirements
 source $VENV_DIR/bin/activate
 pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Florence2/requirements.txt
+pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
+pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
+pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui_controlnet_aux/requirements.txt
+
 
 # Start ComfyUI with custom arguments if provided
 cd $COMFYUI_DIR
