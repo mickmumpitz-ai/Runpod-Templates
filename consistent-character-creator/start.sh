@@ -208,9 +208,13 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
     
     # Create model directories if they don't exist
     mkdir -p "$MODELS_BASE/diffusion_models/"
+    mkdir -p "$MODELS_BASE/checkpoints/"
+    mkdir -p "$MODELS_BASE/text_encoders/"
+    mkdir -p "$MODELS_BASE/model_patches/"
+    mkdir -p "$MODELS_BASE/clip_vision/"
     mkdir -p "$MODELS_BASE/vae"
     mkdir -p "$MODELS_BASE/loras/"
-#    mkdir -p "$MODELS_BASE/upscale_models/"
+    mkdir -p "$MODELS_BASE/upscale_models/"
     
     # Define models to download: "local_path|url"
     MODELS=(
@@ -218,8 +222,13 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "$MODELS_BASE/loras/Qwen-Image-Lightning-4steps-V2.0.safetensors|https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-4steps-V2.0.safetensors"
         "$MODELS_BASE/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors|https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors"
         "$MODELS_BASE/vae/qwen_image_vae.safetensors|https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors"
+        "$MODELS_BASE/checkpoints/flux1-dev-fp8.safetensors|https://huggingface.co/Comfy-Org/flux1-dev/resolve/main/flux1-dev-fp8.safetensors"
+        "$MODELS_BASE/loras/uso-flux1-dit-lora-v1.safetensors|https://huggingface.co/Comfy-Org/USO_1.0_Repackaged/resolve/main/split_files/loras/uso-flux1-dit-lora-v1.safetensors"
+        "$MODELS_BASE/model_patches/uso-flux1-projector-v1.safetensors|https://huggingface.co/Comfy-Org/USO_1.0_Repackaged/resolve/main/split_files/model_patches/uso-flux1-projector-v1.safetensors"
+        "$MODELS_BASE/clip_vision/sigclip_vision_patch14_384.safetensors|https://huggingface.co/Comfy-Org/sigclip_vision_384/resolve/main/sigclip_vision_patch14_384.safetensors"
+        "$MODELS_BASE/upscale_models/4x-UltraSharp.pth|https://huggingface.co/Kim2091/UltraSharp/resolve/main/4x-UltraSharp.pth"
     )
-    
+
     # Download each model if it doesn't exist
     for model in "${MODELS[@]}"; do
         IFS='|' read -r filepath url <<< "$model"
