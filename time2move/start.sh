@@ -174,6 +174,7 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "https://github.com/kijai/ComfyUI-WanVideoWrapper"
         "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
         "https://github.com/PozzettiAndrea/ComfyUI-SAM3"
+        "https://github.com/kijai/ComfyUI-segment-anything-2"
         "https://github.com/calcuis/gguf"
     )
 
