@@ -3,8 +3,10 @@ set -e  # Exit the script if any statement returns a non-true return value
 
 COMFYUI_DIR="/workspace/runpod-slim/ComfyUI"
 VENV_DIR="$COMFYUI_DIR/.venv"
+# export VENV_DIR
 FILEBROWSER_CONFIG="/root/.config/filebrowser/config.json"
 DB_FILE="/workspace/runpod-slim/filebrowser.db"
+CUSTOM_REQS_INSTALLED="$COMFYUI_DIR/.custom_reqs_installed"
 
 # ---------------------------------------------------------------------------- #
 #                          Function Definitions                                  #
@@ -329,14 +331,21 @@ else
     done
 fi
 
-# Installing custom requirements
-source $VENV_DIR/bin/activate
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Florence2/requirements.txt
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui_controlnet_aux/requirements.txt
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-SAM3/requirements.txt
+# Installing custom requirements (one-time installation)
+if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
+    echo "Installing custom node requirements..."
+    source $VENV_DIR/bin/activate
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Florence2/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui_controlnet_aux/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-SAM3/requirements.txt
+    touch "$CUSTOM_REQS_INSTALLED"
+    echo "Custom node requirements installed successfully"
+else
+    echo "Custom node requirements already installed, skipping..."
+fi
 
 # Start ComfyUI with custom arguments if provided
 cd $COMFYUI_DIR
